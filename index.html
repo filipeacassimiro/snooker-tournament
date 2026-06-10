@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Torneio de Sinuca</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="app-header">
+  <div class="header-inner">
+    <div class="header-brand">
+      <span class="brand-icon">🎱</span>
+      <div>
+        <h1 class="brand-title">TORNEIO DE SINUCA</h1>
+        <p class="brand-sub" id="tournament-subtitle">Configure seu torneio</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <div class="progress-wrap" id="progress-wrap" style="display:none">
+        <span class="progress-label" id="progress-label">0%</span>
+        <div class="progress-bar-outer">
+          <div class="progress-bar-inner" id="progress-bar"></div>
+        </div>
+      </div>
+      <button class="btn btn-ghost btn-sm" id="btn-tv-mode" title="Modo TV">📺 Telão</button>
+      <button class="btn btn-ghost btn-sm" id="btn-export-pdf" title="Exportar PDF">📄 PDF</button>
+      <button class="btn btn-danger btn-sm" id="btn-reset" title="Reiniciar torneio">↺ Reiniciar</button>
+    </div>
+  </div>
+</header>
+
+<!-- ===== NAV TABS ===== -->
+<nav class="tab-nav" id="tab-nav">
+  <button class="tab-btn active" data-tab="setup">⚙️ Configuração</button>
+  <button class="tab-btn" data-tab="groups">👥 Grupos</button>
+  <button class="tab-btn" data-tab="matches">🎱 Partidas</button>
+  <button class="tab-btn" data-tab="bracket">🏆 Chaves</button>
+  <button class="tab-btn" data-tab="panel">📊 Painel</button>
+</nav>
+
+<!-- ===== MAIN CONTENT ===== -->
+<main class="app-main">
+
+  <!-- ========== TAB: SETUP ========== -->
+  <section class="tab-content active" id="tab-setup">
+    <div class="section-header">
+      <h2>Cadastro de Participantes</h2>
+      <p class="section-desc">Adicione exatamente 10 jogadores para iniciar o torneio</p>
+    </div>
+
+    <div class="setup-grid">
+      <!-- Add player form -->
+      <div class="card">
+        <h3 class="card-title">Adicionar Jogador</h3>
+        <div class="input-row">
+          <input type="text" id="player-name-input" class="input" placeholder="Nome do jogador" maxlength="30" />
+          <button class="btn btn-primary" id="btn-add-player">Adicionar</button>
+        </div>
+        <p class="hint" id="player-count-hint">0 / 10 jogadores adicionados</p>
+      </div>
+
+      <!-- Player list -->
+      <div class="card">
+        <h3 class="card-title">Jogadores Cadastrados</h3>
+        <ul class="player-list" id="player-list">
+          <li class="empty-state">Nenhum jogador cadastrado ainda.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Start button -->
+    <div class="setup-footer">
+      <button class="btn btn-primary btn-lg" id="btn-start-tournament" disabled>
+        🎱 Iniciar Torneio com 10 Jogadores
+      </button>
+      <p class="hint" id="start-hint">Adicione todos os 10 jogadores para iniciar</p>
+    </div>
+  </section>
+
+  <!-- ========== TAB: GROUPS ========== -->
+  <section class="tab-content" id="tab-groups">
+    <div class="section-header">
+      <h2>Composição dos Grupos</h2>
+      <p class="section-desc">Visualize e edite os grupos manualmente se desejar</p>
+    </div>
+
+    <div class="groups-grid" id="groups-grid">
+      <!-- Generated dynamically -->
+    </div>
+
+    <div class="groups-footer">
+      <button class="btn btn-secondary" id="btn-shuffle-groups">🔀 Sortear Novamente</button>
+      <button class="btn btn-primary" id="btn-confirm-groups">✓ Confirmar Grupos</button>
+    </div>
+  </section>
+
+  <!-- ========== TAB: MATCHES ========== -->
+  <section class="tab-content" id="tab-matches">
+    <div class="section-header">
+      <h2>Partidas</h2>
+      <p class="section-desc">Registre os resultados de cada confronto</p>
+    </div>
+
+    <div class="matches-filter">
+      <button class="filter-btn active" data-filter="all">Todas</button>
+      <button class="filter-btn" data-filter="pending">Pendentes</button>
+      <button class="filter-btn" data-filter="done">Concluídas</button>
+    </div>
+
+    <div id="matches-container">
+      <!-- Generated dynamically -->
+    </div>
+  </section>
+
+  <!-- ========== TAB: BRACKET ========== -->
+  <section class="tab-content" id="tab-bracket">
+    <div class="section-header">
+      <h2>Chaves Eliminatórias</h2>
+      <p class="section-desc">Semifinais e Final do torneio</p>
+    </div>
+
+    <div class="bracket-container" id="bracket-container">
+      <div class="bracket-pending">
+        <span class="bracket-pending-icon">⏳</span>
+        <p>As chaves serão geradas automaticamente quando a fase de grupos for encerrada.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== TAB: PANEL ========== -->
+  <section class="tab-content" id="tab-panel">
+    <div class="section-header">
+      <h2>Painel ao Vivo</h2>
+      <p class="section-desc">Visão completa e atualizada do torneio</p>
+    </div>
+
+    <div id="panel-container">
+      <!-- Generated dynamically -->
+    </div>
+  </section>
+
+</main>
+
+<!-- ===== TV MODE OVERLAY ===== -->
+<div class="tv-overlay" id="tv-overlay" style="display:none">
+  <div class="tv-header">
+    <span>🎱 TORNEIO DE SINUCA — PAINEL AO VIVO</span>
+    <button class="btn btn-ghost btn-sm" id="btn-exit-tv">✕ Sair do Telão</button>
+  </div>
+  <div class="tv-content" id="tv-content"></div>
+</div>
+
+<!-- ===== CHAMPION MODAL ===== -->
+<div class="modal-overlay" id="champion-modal" style="display:none">
+  <div class="modal champion-modal">
+    <div class="champion-fireworks">🎉🏆🎉</div>
+    <h2 class="champion-title">CAMPEÃO DO TORNEIO</h2>
+    <div class="champion-name" id="champion-name">—</div>
+    <div class="champion-sub">Vice-campeão: <span id="runner-up-name">—</span></div>
+    <button class="btn btn-primary btn-lg" id="btn-close-champion">🎱 Ver Resultado</button>
+  </div>
+</div>
+
+<!-- ===== CONFIRM MODAL ===== -->
+<div class="modal-overlay" id="confirm-modal" style="display:none">
+  <div class="modal">
+    <h3 id="confirm-title">Confirmar ação</h3>
+    <p id="confirm-message">Tem certeza?</p>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="confirm-cancel">Cancelar</button>
+      <button class="btn btn-danger" id="confirm-ok">Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== DRAG TOAST ===== -->
+<div class="toast" id="toast" style="display:none"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
